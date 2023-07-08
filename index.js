@@ -7,7 +7,7 @@ const app = express();
 const PORT = 5000;
 
 // Connect to MongoDB
-const DB_URI = "mongodb+srv://sonu788380:mxYmaBMWD8zpEB7X@cluster0.qtf3eb6.mongodb.net/Portfolio?retryWrites=true&w=majority"; // Replace with your MongoDB URI
+const DB_URI = "mongodb+srv://sonu788380:mxYmaBMWD8zpEB7X@cluster0.qtf3eb6.mongodb.net/Portfolio?retryWrites=true&w=majority";
 mongoose
   .connect(DB_URI, {
     useNewUrlParser: true,
@@ -44,14 +44,17 @@ const User = mongoose.model("User", userSchema);
 const Certificate = mongoose.model("Certificate", certificateSchema);
 const Project = mongoose.model("Project", projectSchema);
 
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json());
-
 // Configure multer storage
 const storage = multer.memoryStorage(); // Store the uploaded files in memory buffer
 
 // Configure multer upload settings
 const upload = multer({ storage });
+
+// Add the cors middleware
+app.use(cors());
+
+// Add the express.json middleware
+app.use(express.json());
 
 // Handle registration endpoint
 app.post("/register", async (req, res) => {
@@ -162,7 +165,7 @@ app.get("/certificates", async (req, res) => {
 
     res.status(200).json(formattedCertificates);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching certificates", error: error.message });
+    res.status(500).json({ message:"Error fetching certificates", error: error.message });
   }
 });
 
